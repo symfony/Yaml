@@ -1155,7 +1155,7 @@ header
     </body>
 
 footer # comment3
-EOT
+EOT,
         ]], Yaml::parse(<<<'EOF'
 -
     title: some title
@@ -1495,13 +1495,13 @@ EOT
                 <<<'EOT'
 data: !!binary |
     SGVsbG8gd29ybGQ=
-EOT
+EOT,
             ],
             'containing spaces in block scalar' => [
                 <<<'EOT'
 data: !!binary |
     SGVs bG8gd 29ybGQ=
-EOT
+EOT,
             ],
         ];
     }
@@ -1602,7 +1602,7 @@ foo:
     -
         # bar
         bar: "123",
-YAML
+YAML,
             ],
             [
                 5,
@@ -1612,7 +1612,7 @@ foo:
         # bar
         # bar
         bar: "123",
-YAML
+YAML,
             ],
             [
                 8,
@@ -1625,7 +1625,7 @@ bar:
     -
         # bar
         bar: "123",
-YAML
+YAML,
             ],
             [
                 10,
@@ -1640,7 +1640,7 @@ bar:
         # bar
         # bar
         bar: "123",
-YAML
+YAML,
             ],
         ];
     }
@@ -1940,7 +1940,7 @@ YAML
                 <<<YAML
 [ foo, [bar, baz]
 ]
-YAML
+YAML,
             ],
             'nested sequence spanning multiple lines' => [
                 [
@@ -1952,7 +1952,7 @@ YAML
     ['entry1', {}],
     ['entry2']
 ]
-YAML
+YAML,
             ],
             'sequence nested in mapping' => [
                 ['foo' => ['bar', 'foobar'], 'bar' => ['baz']],
@@ -1994,7 +1994,7 @@ foobar: [
     bar,
 ]
 bar: baz
-YAML
+YAML,
             ],
             'nested sequence nested in mapping starting on the same line' => [
                 [
@@ -2121,7 +2121,7 @@ YAML
 foo: 'bar
 
 baz'
-YAML
+YAML,
             ],
             'mixed mapping with inline notation having separated lines' => [
                 [
@@ -2137,7 +2137,7 @@ map: {
     a: "b"
 }
 param: "some"
-YAML
+YAML,
             ],
             'mixed mapping with inline notation on one line' => [
                 [
@@ -2150,7 +2150,7 @@ YAML
                 <<<YAML
 map: {key: "value", a: "b"}
 param: "some"
-YAML
+YAML,
             ],
             'mixed mapping with compact inline notation on one line' => [
                 [
@@ -2164,7 +2164,7 @@ YAML
 map: {key: "value",
 a: "b"}
 param: "some"
-YAML
+YAML,
             ],
             'nested collections containing strings with bracket chars' => [
                 [
@@ -2204,7 +2204,7 @@ YAML
         foo: 'bar}'
     }
 ]
-YAML
+YAML,
             ],
             'escaped characters in quoted strings' => [
                 [
@@ -2225,7 +2225,7 @@ YAML
     ['te''st'],
     ["te\"st]"]
 ]
-YAML
+YAML,
             ],
         ];
     }
@@ -2276,7 +2276,7 @@ foo: !inline bar
 quz: !long >
   this is a long
   text
-YAML
+YAML,
             ],
             'sequences' => [
                 [new TaggedValue('foo', ['yaml']), new TaggedValue('quz', ['bar'])],
@@ -2284,7 +2284,7 @@ YAML
 - !foo
     - yaml
 - !quz [bar]
-YAML
+YAML,
             ],
             'mappings' => [
                 new TaggedValue('foo', ['foo' => new TaggedValue('quz', ['bar']), 'quz' => new TaggedValue('foo', ['quz' => 'bar'])]),
@@ -2293,14 +2293,14 @@ YAML
 foo: !quz [bar]
 quz: !foo
    quz: bar
-YAML
+YAML,
             ],
             'inline' => [
                 [new TaggedValue('foo', ['foo', 'bar']), new TaggedValue('quz', ['foo' => 'bar', 'quz' => new TaggedValue('bar', ['one' => 'bar'])])],
                 <<<YAML
 - !foo [foo, bar]
 - !quz {foo: bar, quz: !bar {one: bar}}
-YAML
+YAML,
             ],
             'spaces-around-tag-value-in-sequence' => [
                 [new TaggedValue('foo', 'bar')],
@@ -2316,7 +2316,7 @@ YAML
     baz
     #bar
   ]]
-YAML
+YAML,
             ],
             'with-comments-trailing-comma' => [
                 [
@@ -2328,7 +2328,7 @@ YAML
     baz,
     #bar
   ]]
-YAML
+YAML,
             ],
         ];
     }
