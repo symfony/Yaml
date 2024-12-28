@@ -1,6 +1,11 @@
 CHANGELOG
 =========
 
+7.3
+---
+
+ * Add compact nested mapping support by using the `Yaml::DUMP_COMPACT_NESTED_MAPPING` flag
+
 7.2
 ---
 

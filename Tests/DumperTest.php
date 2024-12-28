@@ -1061,6 +1061,97 @@ YAML;
         ];
     }
 
+    public static function getDumpCompactNestedMapping()
+    {
+        $data = [
+            'planets' => [
+                [
+                    'name' => 'Mercury',
+                    'distance' => 57910000,
+                    'properties' => [
+                        ['name' => 'size', 'value' => 4879],
+                        ['name' => 'moons', 'value' => 0],
+                        [[[]]],
+                    ],
+                ],
+                [
+                    'name' => 'Jupiter',
+                    'distance' => 778500000,
+                    'properties' => [
+                        ['name' => 'size', 'value' => 139820],
+                        ['name' => 'moons', 'value' => 79],
+                        [[]],
+                    ],
+                ],
+            ],
+        ];
+        $expected = <<<YAML
+planets:
+\t- name: Mercury
+\t  distance: 57910000
+\t  properties:
+\t\t  - name: size
+\t\t    value: 4879
+\t\t  - name: moons
+\t\t    value: 0
+\t\t  - - - {  }
+\t- name: Jupiter
+\t  distance: 778500000
+\t  properties:
+\t\t  - name: size
+\t\t    value: 139820
+\t\t  - name: moons
+\t\t    value: 79
+\t\t  - - {  }
+
+YAML;
+
+        for ($indentation = 1; $indentation < 5; ++$indentation) {
+            yield \sprintf('Compact nested mapping %d', $indentation) => [
+                $data,
+                strtr($expected, ["\t" => str_repeat(' ', $indentation)]),
+                $indentation,
+            ];
+        }
+
+        $indentation = 2;
+        $inline = 4;
+        $expected = <<<YAML
+planets:
+  - name: Mercury
+    distance: 57910000
+    properties:
+      - { name: size, value: 4879 }
+      - { name: moons, value: 0 }
+      - [[{  }]]
+  - name: Jupiter
+    distance: 778500000
+    properties:
+      - { name: size, value: 139820 }
+      - { name: moons, value: 79 }
+      - [{  }]
+
+YAML;
+
+        yield \sprintf('Compact nested mapping %d and inline %d', $indentation, $inline) => [
+            $data,
+            $expected,
+            $indentation,
+            $inline,
+        ];
+    }
+
+    /**
+     * @dataProvider getDumpCompactNestedMapping
+     */
+    public function testDumpCompactNestedMapping(array $data, string $expected, int $indentation, int $inline = 10)
+    {
+        $dumper = new Dumper($indentation);
+        $actual = $dumper->dump($data, $inline, 0, Yaml::DUMP_COMPACT_NESTED_MAPPING);
+        $this->assertSame($expected, $actual);
+        $this->assertSameData($data, $this->parser->parse($actual));
+    }
+
     private function assertSameData($expected, $actual)
     {
         $this->assertEquals($expected, $actual);
