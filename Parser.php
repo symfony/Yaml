@@ -1158,7 +1158,7 @@ class Parser
     private function lexUnquotedString(int &$cursor): string
     {
         $offset = $cursor;
-        $cursor += strcspn($this->currentLine, '[]{},: ', $cursor);
+        $cursor += strcspn($this->currentLine, '[]{},:', $cursor);
 
         if ($cursor === $offset) {
             throw new ParseException('Malformed unquoted YAML string.');

@@ -1710,6 +1710,33 @@ YAML;
         $this->assertSame($expected, $this->parser->parse($yaml));
     }
 
+    /**
+     * @dataProvider wrappedUnquotedStringsProvider
+     */
+    public function testWrappedUnquotedStringWithMultipleSpacesInValue(string $yaml, array $expected)
+    {
+        $this->assertSame($expected, $this->parser->parse($yaml));
+    }
+
+    public static function wrappedUnquotedStringsProvider() {
+        return [
+            'mapping' => [
+                '{ foo: bar  bar, fiz: cat      cat }',
+                [
+                    'foo' => 'bar  bar',
+                    'fiz' => 'cat      cat',
+                ]
+            ],
+            'sequence' => [
+                '[ bar  bar, cat      cat ]',
+                [
+                    'bar  bar',
+                    'cat      cat',
+                ]
+            ],
+        ];
+    }
+
     public function testParseMultiLineUnquotedString()
     {
         $yaml = <<<EOT
