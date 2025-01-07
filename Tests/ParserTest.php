@@ -2160,6 +2160,19 @@ map: {key: "value", a: "b"}
 param: "some"
 YAML
             ],
+            'mixed mapping with inline notation on one line with a comment' => [
+                [
+                    'map' => [
+                        'key' => 'value',
+                        'a' => 'b',
+                    ],
+                    'param' => 'some',
+                ],
+                <<<YAML
+map: {key: "value", a: "b"} # comment
+param: "some"
+YAML
+            ],
             'mixed mapping with compact inline notation on one line' => [
                 [
                     'map' => [
