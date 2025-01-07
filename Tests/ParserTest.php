@@ -1708,6 +1708,34 @@ YAML;
         $this->assertSame($expected, $this->parser->parse($yaml));
     }
 
+    /**
+     * @dataProvider wrappedUnquotedStringsProvider
+     */
+    public function testWrappedUnquotedStringWithMultipleSpacesInValue(string $yaml, array $expected)
+    {
+        $this->assertSame($expected, $this->parser->parse($yaml));
+    }
+
+    public static function wrappedUnquotedStringsProvider()
+    {
+        return [
+            'mapping' => [
+                '{ foo: bar  bar, fiz: cat      cat }',
+                [
+                    'foo' => 'bar  bar',
+                    'fiz' => 'cat      cat',
+                ]
+            ],
+            'sequence' => [
+                '[ bar  bar, cat      cat ]',
+                [
+                    'bar  bar',
+                    'cat      cat',
+                ]
+            ],
+        ];
+    }
+
     public function testParseMultiLineUnquotedString()
     {
         $yaml = <<<EOT
@@ -2218,6 +2246,30 @@ YAML
         $yaml = <<<YAML
 { foo: bar }
 foobar
+YAML;
+
+        $this->parser->parse($yaml);
+    }
+
+    public function testInlineMappingFollowedByMoreContentIsInvalid()
+    {
+        $this->expectException(ParseException::class);
+        $this->expectExceptionMessage('Unexpected token "baz" at line 1 (near "{ foo: bar } baz").');
+
+        $yaml = <<<YAML
+{ foo: bar } baz
+YAML;
+
+        $this->parser->parse($yaml);
+    }
+
+    public function testInlineSequenceFollowedByMoreContentIsInvalid()
+    {
+        $this->expectException(ParseException::class);
+        $this->expectExceptionMessage('Unexpected token ",bar," at line 1 (near "[\'foo\'],bar,").');
+
+        $yaml = <<<YAML
+['foo'],bar,
 YAML;
 
         $this->parser->parse($yaml);
