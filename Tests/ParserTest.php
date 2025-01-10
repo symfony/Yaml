@@ -1771,14 +1771,14 @@ YAML;
                 [
                     'foo' => 'bar  bar',
                     'fiz' => 'cat      cat',
-                ]
+                ],
             ],
             'sequence' => [
                 '[ bar  bar, cat      cat ]',
                 [
                     'bar  bar',
                     'cat      cat',
-                ]
+                ],
             ],
         ];
     }
@@ -2218,7 +2218,7 @@ YAML,
                 <<<YAML
 map: {key: "value", a: "b"} # comment
 param: "some"
-YAML
+YAML,
             ],
             'mixed mapping with compact inline notation on one line' => [
                 [
