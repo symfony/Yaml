@@ -1213,8 +1213,8 @@ class Parser
                         $value .= $this->currentLine[$cursor];
                         ++$cursor;
 
-                        if ($consumeUntilEol && isset($this->currentLine[$cursor]) && ($whitespaces = strspn($this->currentLine, ' ', $cursor) + $cursor) < strlen($this->currentLine) && '#' !== $this->currentLine[$whitespaces]) {
-                            throw new ParseException(sprintf('Unexpected token "%s".', trim(substr($this->currentLine, $cursor))));
+                        if ($consumeUntilEol && isset($this->currentLine[$cursor]) && ($whitespaces = strspn($this->currentLine, ' ', $cursor) + $cursor) < \strlen($this->currentLine) && '#' !== $this->currentLine[$whitespaces]) {
+                            throw new ParseException(\sprintf('Unexpected token "%s".', trim(substr($this->currentLine, $cursor))));
                         }
 
                         return $value;
